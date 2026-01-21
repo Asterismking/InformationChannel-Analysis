@@ -167,3 +167,12 @@ jobs:
           S3_REGION: ${{ secrets.S3_REGION }}
           GITHUB_ACTIONS: true
         run: python -m trendradar
+
+      - name: Commit and push changes
+        if: success()
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add output/
+          git commit -m "Auto update news report" || exit 0
+          git push
